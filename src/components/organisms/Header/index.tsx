@@ -1,22 +1,21 @@
-import { useFuro } from "furo-react";
+import { MouseEventHandler } from "react";
+import { useRouter } from "next/router";
 
-import useAuthActions from "@/hooks/useAuthActions";
+import { Page } from "@/types";
 
 import { Inner, Root } from "./styles";
 
 export default function Header() {
-  const { logout } = useFuro();
-  const { authorize } = useAuthActions();
+  const router = useRouter();
 
-  const handleLogout = () => {
-    logout();
-    authorize(null);
+  const handleLogout: MouseEventHandler = (e) => {
+    e.preventDefault();
   };
 
   return (
     <Root>
       <Inner>
-        <p>홈</p>
+        <p onClick={() => router.push(Page.HOME)}>홈</p>
         <button type="button" onClick={handleLogout}>
           로그아웃
         </button>

@@ -20,7 +20,6 @@ export default function ControlPanel() {
   useEffect(() => {
     getPlayerMovement().then((res) => {
       const { MoveUp, MoveRight } = res.data;
-      console.log(res.data);
       setMovement({
         MoveUp,
         MoveRight,
@@ -44,7 +43,6 @@ export default function ControlPanel() {
       .then(() => {
         getPlayerMovement().then((res) => {
           const { MoveUp, MoveRight } = res.data;
-          console.log(MoveRight, MoveUp);
           setMovement({
             MoveUp,
             MoveRight,
@@ -68,7 +66,6 @@ export default function ControlPanel() {
       .then(() => {
         getPlayerMovement().then((res) => {
           const { MoveUp, MoveRight } = res.data;
-          console.log(MoveRight, MoveUp);
           setMovement({
             MoveUp,
             MoveRight,
@@ -77,7 +74,6 @@ export default function ControlPanel() {
       });
   };
   const handleCheck: ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.checked);
     axios
       .put("http://localhost:30010/remote/object/property", {
         objectPath: "/Game/StarterContent/Maps/Test.Test:PersistentLevel.BP_Player_C_4",

@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { FuroProvider } from "furo-react";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 
 import BasicLayout from "@/components/templates/BasicLayout";
 import RequireAuth from "@/components/templates/RequireAuth";
@@ -30,32 +29,25 @@ function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
-    <Provider store={store}>
+    <ReduxProvider store={store}>
       <CacheProvider value={emotionCache}>
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
-        <FuroProvider
-          domain={"https://auth.furo.one"}
-          clientId={"4893df2b323bfeb799c18caee7c67b39"}
-          redirectUri={"http://localhost:3000/4893df2b323bfeb799c18caee7c67b39"}
-          apiUrl={"https://api.furo.one"}
-        >
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <BasicLayout>
-              {router.asPath === Page.HOME ? (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <BasicLayout>
+            {router.asPath === Page.HOME ? (
+              <Component {...pageProps} />
+            ) : (
+              <RequireAuth>
                 <Component {...pageProps} />
-              ) : (
-                <RequireAuth>
-                  <Component {...pageProps} />
-                </RequireAuth>
-              )}
-            </BasicLayout>
-          </ThemeProvider>
-        </FuroProvider>
+              </RequireAuth>
+            )}
+          </BasicLayout>
+        </ThemeProvider>
       </CacheProvider>
-    </Provider>
+    </ReduxProvider>
   );
 }
 
